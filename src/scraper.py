@@ -8,8 +8,11 @@ from bs4 import BeautifulSoup
 from werkzeug.contrib.cache import SimpleCache
 
 
-MATCH_URL = 'http://www.espncricinfo.com/ci/engine/match/%(match_id)s.json'
 SUMMARY_URL = 'http://www.espncricinfo.com/netstorage/summary.json'
+MATCH_URL = 'http://www.espncricinfo.com/ci/engine/match/%(match_id)s.json'
+SCORECARD_URL = 'http://www.espncricinfo.com/sdds/engine/match/' \
+                '%(match_id)s.html?view=scorecard;wrappertype=none;xhr=1'
+
 MATCH_ID_RE = re.compile('\/(\d+)\.html')
 
 
@@ -59,4 +62,7 @@ def get_match(match_id):
         for player in team['player']:
             match['players'][player['player_id']] = player
     
+    resp = requests.get(SCORECARD_URL % {'match_id': match_id})
+    match['scorecard'] = resp.content.decode('utf-8', 'ignore')
+
     return match

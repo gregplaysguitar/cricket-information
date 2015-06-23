@@ -4,6 +4,7 @@
 {% block content %}
   
   <article class="match">
+    <h1>{{ match['description'] }}</h1>
     
     <section class="commentary">
       {% for over in match['comms'] %}
@@ -33,7 +34,7 @@
               <li>
                 <strong>{{ ball['overs_actual'] }}</strong>
                 {{ ball['players'] }}, {{ ball['event'] }}
-                <span>{{ ball['text'] }}</span>
+                <span>{{ ball['text']|safe }}</span>
               </li>
             {% endfor %}
           </ul>
@@ -42,9 +43,9 @@
     </section>
     
     <h3>Scorecard</h3>
-    <ul class="card">
-      {{ match['match_card']|safe }}
-    </ul>
+    <div class="card">
+      {{ match['scorecard']|safe }}
+    </div>
   </article>
   
   <pre>{{ pretty }}</pre>
