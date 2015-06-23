@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  
+  <article class="match">
+    
+    <section class="commentary">
+      {% for over in match['comms'] %}
+        <article class="over">
+          <header>
+            <h6>
+              End of over {{ over['over_number'] }} —
+              {{ match['teams'][over['team_id']]['team_general_name'] }} 
+              {{ over['runs'] }}/{{ over['wickets'] }}
+            </h6>
+            <p>
+              {% for batsman in over['batsman'] %}
+                {{ match['players'][batsman.player_id]['card_long'] }}
+                {{ batsman['runs'] }} ({{ batsman['balls_faced'] }}b)<br>
+              {% endfor %}
+            </p>
+            <p>
+              {% for bowler in over['bowler'] %}
+                {{ match['players'][bowler.player_id]['card_long'] }}
+                {{ bowler['overs'] }}-{{ bowler['maidens'] }}-
+                {{- bowler['conceded'] }}-{{ bowler['wickets'] }}<br>
+              {% endfor %}
+            </p>
+          </header>
+          <ul>
+            {% for ball in over['ball'] %}
+              <li>
+                <strong>{{ ball['overs_actual'] }}</strong>
+                {{ ball['players'] }}, {{ ball['event'] }}
+                <span>{{ ball['text'] }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    </section>
+    
+    <h3>Scorecard</h3>
+    <ul class="card">
+      {{ match['match_card']|safe }}
+    </ul>
+  </article>
+  
+  <pre>{{ pretty }}</pre>
+
+{% endblock %}

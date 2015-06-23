@@ -1,0 +1,63 @@
+{% from 'snippets.html' import short_score %}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>
+      {%- block title %}Cricket Information{% endblock -%}
+    </title>
+  
+    {% block meta %}
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    {% endblock %}
+    
+    <meta name="viewport" content="width=device-width">
+    
+    {# assets filters="rjsmin", output="gen/head.js", "j/modernizr.js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets #}
+    
+    {% assets filters='cssmin,cssrewrite', output='gen/all.css',
+              'c/lib/normalize.css', 'c/lib/defaults.css', 
+              'site_css' %}
+      <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" 
+            media="screen,projection,print">
+    {% endassets %}
+    
+    
+    <noscript>
+      <link href="{{ url_for('static', filename='c/noscript.css') }}" rel="stylesheet"
+            type="text/css" media="screen,projection,print">
+    </noscript>
+    
+    <link rel="SHORTCUT ICON" href="{{ STATIC_URL }}favicon.ico">
+
+    {% block extrahead %}
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        {# {% for match in summary.matches.itervalues() %}
+          <a href="{{ url_for('match', match_id=match.match_id) }}"
+             title="{{ short_score(match) }}">
+            {{ match['team1_abbrev'] }}-{{ match['team2_abbrev'] }}
+          </a>
+        {% endfor %} #}
+      </nav>
+    </header>
+    
+    {% block content %}{% endblock %}
+    
+    {% assets filters='rjsmin', output='gen/all.js', 'j/jquery.js', 
+              'j/site.js' %}
+        <script type='text/javascript' src='{{ ASSET_URL }}'></script>
+    {% endassets %}
+
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

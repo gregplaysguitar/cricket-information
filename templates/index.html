@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% from 'snippets.html' import short_score %}
+
+
+{% block content %}
+  
+  <nav class="summary">
+    {% for match in summary.matches.itervalues() %}
+      <a class="match" href="{{ url_for('match', match_id=match.match_id) }}">
+        <h4>{{ match['team1_name'] }} vs {{ match['team2_name'] }}</h4>
+        {% set score = short_score(match).strip() %}
+        {% if score %}
+          <p class="score">
+            {% for line in score.split('\n') %}
+              {{ line }}<br>
+            {% endfor %}
+          </p>
+        {% else %}
+          <p>Starts at {{ match['start_string']|safe }}</p>
+        {% endif %}
+      
+        
+      </a>
+    {% endfor %}
+  </nav>
+  
+  <pre>{{ pretty }}</pre>
+
+{% endblock %}

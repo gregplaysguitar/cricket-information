@@ -1,0 +1,4 @@
+*.pyc
+/static/.webassets-cache
+/static/gen
+/virtualenv

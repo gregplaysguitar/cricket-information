@@ -1,0 +1,97 @@
+@mixin grid($cols: 0, $gutter: 5px) {
+    float: left;
+    display: inline;
+    margin-left: $gutter;
+    margin-right: $gutter;
+    @if $cols {
+        width: $cols * 40px - $gutter * 2;
+    }
+}
+@mixin left($cols: 1) {
+    margin-left: (30px * $cols) + (10px * ($cols - 1)) + 15px;
+}
+@mixin right($cols: 1) {
+    margin-right: (30px * $cols) + (10px * ($cols - 1)) + 15px;
+}
+
+@mixin rotated($deg, $origin-left: center, $origin-top: center) {
+    -moz-transform: rotate($deg);
+    -webkit-transform: rotate($deg);
+    -ms-transform: rotate($deg);
+    transform: rotate($deg);
+
+    -moz-transform-origin: $origin-left $origin-top;
+    -webkit-transform-origin: $origin-left $origin-top;
+    -ms-transform-origin: $origin-left $origin-top;
+    transform-origin: $origin-left $origin-top;
+}
+
+@mixin rounded($radius) {
+    -moz-border-radius: $radius;
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin transition($duration, $property: all, $type: ease-in-out) {
+    -moz-transition-property: $property;
+    -moz-transition-duration: $duration;
+    -moz-transition-timing-function: $type;
+    -webkit-transition-property: $property;
+    -webkit-transition-duration: $duration;
+    -webkit-transition-timing-function: $type;
+    transition-property: $property;
+    transition-duration: $duration;
+    transition-timing-function: $type;
+}
+
+@mixin greyscale($amount) {
+    filter: grayscale($amount * 100%);
+    -webkit-filter: grayscale($amount * 100%);
+    -moz-filter: grayscale($amount * 100%);
+    -ms-filter: grayscale($amount * 100%);
+    -o-filter: grayscale($amount * 100%);
+    @if $amount {
+        filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");  
+        filter: gray;
+    }
+    else {
+        filter: none;
+    }
+}
+
+@mixin clearfix {
+ /* For modern browsers */
+  &:before,
+  &:after {
+    content:"";
+    display:table;
+  }
+
+  &:after {
+    clear:both;
+  }
+
+  /* For IE 6/7 (trigger hasLayout) */
+  & {
+    zoom:1;
+  }
+}
+
+@mixin placeholder($color, $font-size: 1em) {
+    /* This could be made much better with sass 3.2, see 
+       http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixins */
+    &.placeholder { color: $color; font-size: $font-size; }
+    &:-moz-placeholder { color: $color; font-size: $font-size; }
+    &:-ms-placeholder { color: $color; font-size: $font-size; }
+    &::-webkit-input-placeholder { color: $color; font-size: $font-size; }
+}
+
+// http://paulirish.com/2012/box-sizing-border-box-ftw/
+@mixin box-sizing($sizing) {
+     -moz-box-sizing: $sizing;
+     -webkit-box-sizing: $sizing;
+     box-sizing: $sizing;
+     // *behavior: url(/static/c/lib/boxsizing.htc); // ie - full path is required!
+}
+
+

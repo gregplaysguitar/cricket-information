@@ -1,0 +1,8 @@
+
+
+{% macro short_score(match) -%}
+  {% if match['team1_score'] or match['team2_score'] -%}
+    {{ match['team1_abbrev'] }}: {{- match['team1_score']|safe }}
+{{ match['team2_abbrev'] }}: {{- match['team2_score']|safe }}
+ {%- endif %}
+{%- endmacro %}
