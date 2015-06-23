@@ -44,25 +44,30 @@ def get_summary():
     return data
 
 
+def replace_links(html):
+    soup = BeautifulSoup(html)
+    for a in soup.findAll('a'):
+        if a['href'].startswith('/'):
+            a['href'] = 'http://www.espncricinfo.com' + a['href']
+    return unicode(soup)
+
+
 @cached(600)
 def get_match(match_id):
     resp = requests.get(MATCH_URL % {'match_id': match_id})
     match = json.loads(resp.content)
     
-    soup = BeautifulSoup(match['match_card'])
-    for a in soup.findAll('a'):
-        if a['href'].startswith('/'):
-            a['href'] = 'http://http://www.espncricinfo.com' + a['href']
-    match['match_card'] = unicode(soup)
+    # match['match_card'] = replace_links(soup)
     
     match['teams'] = {}
     match['players'] = {}
     for team in match['team']:
         match['teams'][team['team_id']] = team
-        for player in team['player']:
-            match['players'][player['player_id']] = player
+        if 'player' in team:
+            for player in team['player']:
+                match['players'][player['player_id']] = player
     
     resp = requests.get(SCORECARD_URL % {'match_id': match_id})
-    match['scorecard'] = resp.content.decode('utf-8', 'ignore')
+    match['scorecard'] = replace_links(resp.content.decode('utf-8', 'ignore'))
 
     return match

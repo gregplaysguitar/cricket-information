@@ -21,21 +21,28 @@ h1 {
   padding: 0 0 20px;
 }
 
-header {
-  nav {
-    padding: 15px 0;
-    a {
-      display: inline-block;
-      padding: 5px 0;
-      margin: 0 10px 0 0;
-    }
-  }
-}
 
 header, .summary, .match {
   max-width: 720px;
   margin: 0 auto;
   width: 95vw;
+}
+
+header {
+  border-bottom: 1px solid #888;
+  margin-bottom: 20px;
+  nav {
+    padding: 0;
+    a {
+      display: inline-block;
+      padding: 20px 20px 20px 0;
+      margin: 0;
+      min-width: 100px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .summary {
